@@ -1,0 +1,138 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        body {
+            overflow-x: hidden;
+            margin: 0px;
+        }
+
+        nav {
+            display: flex;
+        }
+
+        nav.fixed {
+            position: fixed;
+            z-index: 10;
+            background: white;
+            width: 100%;
+            border-bottom: 1px solid #ddd;
+        }
+
+        ul {
+            width: 100%;
+            display: flex;
+            list-style: none;
+            justify-content: space-around;
+        }
+
+        .hero-banner {
+            background: #1F494D;
+            display: inline-block;
+            width: 100%;
+        }
+
+        .hero-banner img {
+            mix-blend-mode: multiply;
+            filter: grayscale(100%);
+        }
+
+        .container {
+            padding: 20px;
+        }
+
+        .skills {
+            margin-top: 50px;
+            margin-bottom: 50px;
+            display: flex;
+            justify-content: space-evenly;
+        }
+
+        .fade-in {
+            opacity: 0;
+            transition: all 0.5s;
+        }
+
+        .fade-in-slow {
+            opacity: 0;
+            transition: all 0.8s;
+        }
+
+        .fade-in-left {
+            transform: translateX(-50%) scale(0.95);
+        }
+
+        .fade-in-right {
+            transform: translateX(50%) scale(0.95);
+        }
+
+        .fade-in-up {
+            transform: translateY(-100%) scale(0.95);
+        }
+
+        .fade-in-down {
+            transform: translateY(100%) scale(0.95);
+        }
+
+        .fade-in.complete {
+            opacity: 1;
+            transform: translateX(0%) translateY(0%) scale(1);
+        }
+
+        .fade-in-slow.complete {
+            opacity: 1;
+            transform: translateX(0%) translateY(0%) scale(1);
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="fixed">
+        <ul>
+            <li>Home</li>
+            <li>About</li>
+            <li>Skills</li>
+            <li>Github</li>
+            <li>Packages</li>
+            <li>Linkedin</li>
+        </ul>
+    </nav>
+    <div class="hero-banner">
+        <img src="http://www.steveschoger.com/img/hero-banner.jpg" />
+    </div>
+    <section class="container">
+        <div class="skills">
+            <img class="fade-in fade-in-left" src="http://via.placeholder.com/200x150" alt="">
+            <img class="fade-in-slow fade-in-down" src="http://via.placeholder.com/200x150" alt="">
+            <img class="fade-in-slow fade-in-down" src="http://via.placeholder.com/200x150" alt="">
+            <img class="fade-in-slow fade-in-down" src="http://via.placeholder.com/200x150" alt="">
+            <img class="fade-in fade-in-right" src="http://via.placeholder.com/200x150" alt="">
+        </div>
+
+        <div>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Deleniti necessitatibus facere eveniet tempora culpa
+                sunt quos error adipisci maxime dolore. Modi, assumenda quis natus autem sint error ducimus repellendus tenetur
+                blanditiis eos incidunt, eveniet accusantium. Vel nam blanditiis quis aperiam eaque quasi omnis ab minima
+                corrupti qui ea possimus commodi reprehenderit nobis pariatur iure, nostrum debitis a! Repellat recusandae
+                sint sapiente molestiae, consectetur quae minima sunt ut, dolorem saepe totam aut? Atque quia deserunt consectetur
+                eaque. Fugit, consequatur reprehenderit inventore ad sunt sequi praesentium saepe mollitia minus consequuntur
+                eos perferendis voluptate dolore aspernatur labore ullam similique excepturi harum architecto expedita qui
+                molestias dignissimos nihil. Non alias repellendus, consequatur adipisci unde numquam itaque eum aperiam?
+                Error sunt sapiente officiis voluptate esse accusantium ipsam, tempore dolores magni, non quos. Labore consequuntur
+                velit dolor commodi, esse fugiat quisquam nisi et aut nobis cupiditate sequi sit iste, saepe quis suscipit
+                fugit accusamus repellendus nostrum fuga eos perspiciatis. Laudantium praesentium tempora quasi adipisci
+                minus maxime impedit reprehenderit cumque, ex aperiam et facilis cum aliquam quia. Quia molestiae itaque
+                aliquid eaque, ex sequi alias, aspernatur incidunt illum inventore hic omnis ut saepe nobis ipsa adipisci
+                aliquam quis magni praesentium vitae earum quae necessitatibus, obcaecati at! Rerum!</p>
+        </div>
+    </section>
+
+
+    <script src="index.build.js"></script>
+</body>
+
+</html>

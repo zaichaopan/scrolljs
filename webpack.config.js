@@ -2,11 +2,11 @@ var path = require('path');
 
 module.exports = {
     entry: {
-        app: './demo/example6.js'
+        app: './demo/index.js'
     },
     output: {
         path: path.resolve(__dirname, 'demo'),
-        filename: 'example6.build.js'
+        filename: 'index.build.js'
     },
     module: {
         rules: [{

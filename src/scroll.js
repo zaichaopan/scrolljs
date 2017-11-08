@@ -1,13 +1,37 @@
 export default {
-    reachToBottom(el, cb) {
-        el.onscroll = (e) => {
-            if (el.scrollTop + el.clientHeight >= el.scrollHeight) {
-                cb();
-            }
-        };
+    currentPostion: 0,
+
+    on(cb, el = window) {
+        el.onscroll = (e) => cb();
     },
 
-    reachToPageBottom(cb, footer = null) {
+    reached(cb, el) {
+        if (window.scrollY + window.innerHeight >= el.offsetTop) {
+            cb();
+        }
+    },
+
+    reachedHalfOf(cb, el) {
+        let halfSize = window.scrollY + window.innerHeight - el.clientHeight / 2;
+        let elBottom = el.offsetTop + el.clientHeight;
+        if (halfSize >= el.offsetTop) {
+            cb();
+        }
+    },
+
+    reachedElementBottom(cb, el) {
+        if (window.scrollY + window.innerHeight >= el.offsetTop + el.scrollHeight) {
+            cb();
+        }
+    },
+
+    reachedContainerBottom(cb, container) {
+        if (container.scrollTop + container.clientHeight >= container.scrollHeight) {
+            cb();
+        }
+    },
+
+    reachedPageBottom(cb, footer = null) {
         window.onscroll = (e) => {
             let footerHeight = footer === null ? 0 : footer.clientHeight;
             let hasReachedBottom = window.innerHeight + window.scrollY >= document.body.scrollHeight - footerHeight;
@@ -17,31 +41,16 @@ export default {
         }
     },
 
-    reachToTop(el, cb) {
+    reachedToTop(cb, el = window) {
         el.onscroll = (e) => {
-            if (el.scrollTop === 0) {
+            let yOffsetProp = el === window ? 'scrollY' : 'scrollTop';
+            if (el[yOffsetProp] === 0) {
                 cb();
             }
         };
     },
 
-    scollToBottom(el = null) {
-        if (el === null) {
-            window.scrollTo(0, document.body.scrollHeight);
-        } else {
-            el.scrollTop = el.scrollHeight - el.clientHeight;
-        }
-    },
-
-    scrollToTop(el = null) {
-        if (el === null) {
-            window.scrollTo(0, 0);
-        } else {
-            el.scrollTop = 0;
-        }
-    },
-
-    scrollTo(el, container = window) {
+    to(el, container = window) {
         if (container === window) {
             container.scrollTo = el.offsetTop;
         } else {
@@ -49,22 +58,25 @@ export default {
         }
     },
 
-    on(cb, el= window){
-        el.onscroll = (e) => cb();
-    },
-
-    scrollToHalf(el, enterCb, leaveCb) {
-        let halfSize = window.scrollY + window.innerHeight - el.height / 2;
-        let elBottom = el.offsetTop + el.height;
-        el.offsetTop <= halfSize && halfSize <= elBottom ? enterCb() : leaveCb();
-    },
-
-    scrollToward(upCb, downCb, el = window) {
-        let scrollTop = 0;
-        el.onscroll = (e) => {
-            let yOffsetProp = el === window ? 'scrollY' : 'scrollTop';
-            el[yOffsetProp] > scrollTop ? downCb() : upCb();
-            scrollTop = el[yOffsetProp];
+    toBottom(el = null) {
+        if (el === null) {
+            window.scrollTo(0, document.body.scrollHeight);
+        } else {
+            el.scrollTop = el.scrollHeight - el.clientHeight;
         }
+    },
+
+    toTop(el = null) {
+        if (el === null) {
+            window.scrollTo(0, 0);
+        } else {
+            el.scrollTop = 0;
+        }
+    },
+
+    toward(upCb, downCb, el = window) {
+        let yOffsetProp = el === window ? 'scrollY' : 'scrollTop';
+        el[yOffsetProp] > this.currentPostion ? downCb() : upCb();
+        this.currentPostion = el[yOffsetProp];
     }
 }
