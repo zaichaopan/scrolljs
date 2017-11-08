@@ -70,43 +70,83 @@
 "use strict";
 
 
+var _index = __webpack_require__(1);
+
+var _index2 = _interopRequireDefault(_index);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var container = document.querySelector('.container');
+
+var upCb = function upCb() {
+  return console.log('scroll up');
+};
+var downCb = function downCb() {
+  return console.log('scroll down');
+};
+
+_index2.default.scrollToward(upCb, downCb);
+_index2.default.scrollToward(upCb, downCb, container);
+
+/***/ }),
+/* 1 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _scroll = __webpack_require__(2);
+
+var _scroll2 = _interopRequireDefault(_scroll);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = _scroll2.default;
+
+/***/ }),
+/* 2 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
 exports.default = {
     reachToBottom: function reachToBottom(el, cb) {
-        var _arguments = arguments;
-
         el.onscroll = function (e) {
             if (el.scrollTop + el.clientHeight >= el.scrollHeight) {
-                cb.apply(undefined, _arguments);
+                cb();
             }
         };
     },
     reachToPageBottom: function reachToPageBottom(cb) {
-        var _arguments2 = arguments;
         var footer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
 
         window.onscroll = function (e) {
             var footerHeight = footer === null ? 0 : footer.clientHeight;
-            if (window.innerHeight + window.scrollY >= document.body.scrollHeight - footerHeight) {
-                cb.apply(undefined, _arguments2);
+            var hasReachedBottom = window.innerHeight + window.scrollY >= document.body.scrollHeight - footerHeight;
+            if (hasReachedBottom) {
+                cb();
             }
         };
     },
     reachToTop: function reachToTop(el, cb) {
-        var _arguments3 = arguments;
-
         el.onscroll = function (e) {
             if (el.scrollTop === 0) {
-                cb.apply(undefined, _arguments3);
+                cb();
             }
         };
     },
     scollToBottom: function scollToBottom() {
         var el = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
 
-        if (el === '') {
+        if (el === null) {
             window.scrollTo(0, document.body.scrollHeight);
         } else {
             el.scrollTop = el.scrollHeight - el.clientHeight;
@@ -115,7 +155,7 @@ exports.default = {
     scrollToTop: function scrollToTop() {
         var el = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
 
-        if (el === '') {
+        if (el === null) {
             window.scrollTo(0, 0);
         } else {
             el.scrollTop = 0;
@@ -133,29 +173,17 @@ exports.default = {
     scrollToHalf: function scrollToHalf(el, enterCb, leaveCb) {
         var halfSize = window.scrollY + window.innerHeight - el.height / 2;
         var elBottom = el.offsetTop + el.height;
-        if (el.offsetTop <= halfSize && halfSize <= elBottom) {
-            enterCb.apply(undefined, arguments);
-        } else {
-            leaveCb.apply(undefined, arguments);
-        }
+        el.offsetTop <= halfSize && halfSize <= elBottom ? enterCb() : leaveCb();
     },
     scrollToward: function scrollToward(upCb, downCb) {
-        var _arguments4 = arguments;
-        var el = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
+        var el = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : window;
 
         var scrollTop = 0;
-
-        if (el === null) {
-            window.onscroll = function (e) {
-                window.scrollY > scrollTop ? downCb.apply(undefined, _arguments4) : upCb.apply(undefined, _arguments4);
-                scrollTop = window.scrollY;
-            };
-        } else {
-            el.onscroll = function (e) {
-                el.scrollTop > scrollTop ? downCb.apply(undefined, _arguments4) : upCb.apply(undefined, _arguments4);
-                scrollTop = el.scrollTop;
-            };
-        }
+        el.onscroll = function (e) {
+            var yOffsetProp = el === window ? 'scrollY' : 'scrollTop';
+            el[yOffsetProp] > scrollTop ? downCb() : upCb();
+            scrollTop = el[yOffsetProp];
+        };
     }
 };
 

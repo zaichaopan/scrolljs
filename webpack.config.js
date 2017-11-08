@@ -2,11 +2,11 @@ var path = require('path');
 
 module.exports = {
     entry: {
-        app: './src/scroll.js'
+        app: './demo/example6.js'
     },
     output: {
-        path: path.resolve(__dirname, 'dist'),
-        filename: '[name].js'
+        path: path.resolve(__dirname, 'demo'),
+        filename: 'example6.build.js'
     },
     module: {
         rules: [{

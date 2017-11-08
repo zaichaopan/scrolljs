@@ -70,6 +70,46 @@
 "use strict";
 
 
+var _index = __webpack_require__(1);
+
+var _index2 = _interopRequireDefault(_index);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+console.log(_index2.default);
+
+var cb = function cb() {
+    alert("You have reach the bottom");
+};
+
+_index2.default.reachToPageBottom(cb);
+
+/***/ }),
+/* 1 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _scroll = __webpack_require__(2);
+
+var _scroll2 = _interopRequireDefault(_scroll);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = _scroll2.default;
+
+/***/ }),
+/* 2 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
@@ -84,22 +124,21 @@ exports.default = {
         };
     },
     reachToPageBottom: function reachToPageBottom(cb) {
-        var _arguments2 = arguments;
         var footer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
 
         window.onscroll = function (e) {
             var footerHeight = footer === null ? 0 : footer.clientHeight;
             if (window.innerHeight + window.scrollY >= document.body.scrollHeight - footerHeight) {
-                cb.apply(undefined, _arguments2);
+                cb();
             }
         };
     },
     reachToTop: function reachToTop(el, cb) {
-        var _arguments3 = arguments;
+        var _arguments2 = arguments;
 
         el.onscroll = function (e) {
             if (el.scrollTop === 0) {
-                cb.apply(undefined, _arguments3);
+                cb.apply(undefined, _arguments2);
             }
         };
     },
@@ -140,19 +179,19 @@ exports.default = {
         }
     },
     scrollToward: function scrollToward(upCb, downCb) {
-        var _arguments4 = arguments;
+        var _arguments3 = arguments;
         var el = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
 
         var scrollTop = 0;
 
         if (el === null) {
             window.onscroll = function (e) {
-                window.scrollY > scrollTop ? downCb.apply(undefined, _arguments4) : upCb.apply(undefined, _arguments4);
+                window.scrollY > scrollTop ? downCb.apply(undefined, _arguments3) : upCb.apply(undefined, _arguments3);
                 scrollTop = window.scrollY;
             };
         } else {
             el.onscroll = function (e) {
-                el.scrollTop > scrollTop ? downCb.apply(undefined, _arguments4) : upCb.apply(undefined, _arguments4);
+                el.scrollTop > scrollTop ? downCb.apply(undefined, _arguments3) : upCb.apply(undefined, _arguments3);
                 scrollTop = el.scrollTop;
             };
         }
