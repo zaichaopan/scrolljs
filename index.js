@@ -1,3 +1,4 @@
-import scroll from './src/scroll.js';
+import * as scroll from './src/scroll.js';
 
-export default scroll;
+export const scrollWindow = scroll.scrollWindow;
+

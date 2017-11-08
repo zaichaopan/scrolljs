@@ -1,24 +1,28 @@
-import scroll from '../index';
+import 
+{scrollWindow}
+ from '../index';
+
 
 let nav = document.querySelector('nav');
 let skillContainer = document.querySelector('.skills');
 
-scroll.on(() => {
-    scroll.reachedHalfOf(
-        () => skillContainer.querySelectorAll('img').forEach(img => img.classList.add('complete')),
-        skillContainer
-    );
+scrollWindow.reachedElementHalf
+(
+    () => skillContainer.querySelectorAll('img').forEach(img => img.classList.add('complete')),
+    skillContainer
+);
 
-    scroll.toward(
-        () => {
-            if (!nav.classList.contains('fixed')) {
-                nav.classList.add('fixed');
-            }
-        },
-        () => {
-            if (nav.classList.contains('fixed')) {
-                nav.classList.remove('fixed');
-            }
+scrollWindow.toward(
+    () => {
+        if (!nav.classList.contains('fixed')) {
+            document.body.style.paddingTop = nav.offsetHeight + 'px';
+            nav.classList.add('fixed');
         }
-    );
-});
+    },
+    () => {
+        if (nav.classList.contains('fixed')) {
+            nav.classList.remove('fixed');
+            document.body.style.paddingTop = 0;
+        }
+    }
+);

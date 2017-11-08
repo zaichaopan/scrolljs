@@ -72,29 +72,25 @@
 
 var _index = __webpack_require__(1);
 
-var _index2 = _interopRequireDefault(_index);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
 var nav = document.querySelector('nav');
 var skillContainer = document.querySelector('.skills');
 
-_index2.default.on(function () {
-    _index2.default.reachedHalfOf(function () {
-        return skillContainer.querySelectorAll('img').forEach(function (img) {
-            return img.classList.add('complete');
-        });
-    }, skillContainer);
-
-    _index2.default.toward(function () {
-        if (!nav.classList.contains('fixed')) {
-            nav.classList.add('fixed');
-        }
-    }, function () {
-        if (nav.classList.contains('fixed')) {
-            nav.classList.remove('fixed');
-        }
+_index.scrollWindow.reachedElementHalf(function () {
+    return skillContainer.querySelectorAll('img').forEach(function (img) {
+        return img.classList.add('complete');
     });
+}, skillContainer);
+
+_index.scrollWindow.toward(function () {
+    if (!nav.classList.contains('fixed')) {
+        document.body.style.paddingTop = nav.offsetHeight + 'px';
+        nav.classList.add('fixed');
+    }
+}, function () {
+    if (nav.classList.contains('fixed')) {
+        nav.classList.remove('fixed');
+        document.body.style.paddingTop = 0;
+    }
 });
 
 /***/ }),
@@ -107,14 +103,15 @@ _index2.default.on(function () {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.scrollWindow = undefined;
 
 var _scroll = __webpack_require__(2);
 
-var _scroll2 = _interopRequireDefault(_scroll);
+var scroll = _interopRequireWildcard(_scroll);
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
-exports.default = _scroll2.default;
+var scrollWindow = exports.scrollWindow = scroll.scrollWindow;
 
 /***/ }),
 /* 2 */
@@ -126,94 +123,185 @@ exports.default = _scroll2.default;
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.default = {
-    currentPostion: 0,
-
-    on: function on(cb) {
-        var el = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : window;
-
-        el.onscroll = function (e) {
+var scrollWindow = exports.scrollWindow = {
+    // tested
+    scroll: function scroll(cb) {
+        window.addEventListener('scroll', function (e) {
             return cb();
-        };
+        });
     },
-    reached: function reached(cb, el) {
-        if (window.scrollY + window.innerHeight >= el.offsetTop) {
-            cb();
-        }
+
+
+    // tested
+    reachedElementTop: function reachedElementTop(cb, el) {
+        this.scroll(function () {
+            if (window.scrollY + window.innerHeight >= el.offsetTop) {
+                cb();
+            }
+        });
     },
-    reachedHalfOf: function reachedHalfOf(cb, el) {
-        var halfSize = window.scrollY + window.innerHeight - el.clientHeight / 2;
-        var elBottom = el.offsetTop + el.clientHeight;
-        if (halfSize >= el.offsetTop) {
-            cb();
-        }
+
+
+    // tested
+    reachedElementHalf: function reachedElementHalf(cb, el) {
+        this.scroll(function () {
+            var halfSize = window.scrollY + window.innerHeight - el.clientHeight / 2;
+            var elBottom = el.offsetTop + el.clientHeight;
+            if (halfSize >= el.offsetTop) {
+                cb();
+            }
+        });
     },
+
+
+    //tested
     reachedElementBottom: function reachedElementBottom(cb, el) {
-        if (window.scrollY + window.innerHeight >= el.offsetTop + el.scrollHeight) {
-            cb();
-        }
-    },
-    reachedContainerBottom: function reachedContainerBottom(cb, container) {
-        if (container.scrollTop + container.clientHeight >= container.scrollHeight) {
-            cb();
-        }
+        this.scroll(function () {
+            if (window.scrollY + window.innerHeight >= el.offsetTop + el.scrollHeight) {
+                cb();
+            }
+        });
     },
     reachedPageBottom: function reachedPageBottom(cb) {
         var footer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
 
-        window.onscroll = function (e) {
+        this.scroll(function () {
             var footerHeight = footer === null ? 0 : footer.clientHeight;
             var hasReachedBottom = window.innerHeight + window.scrollY >= document.body.scrollHeight - footerHeight;
             if (hasReachedBottom) {
                 cb();
             }
-        };
+        });
     },
-    reachedToTop: function reachedToTop(cb) {
+    reachedPageTop: function reachedPageTop(cb) {
         var el = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : window;
 
-        el.onscroll = function (e) {
-            var yOffsetProp = el === window ? 'scrollY' : 'scrollTop';
-            if (el[yOffsetProp] === 0) {
+        this.scroll(function () {
+            if (window.screenY === 0) {
                 cb();
             }
-        };
+        });
     },
-    to: function to(el) {
-        var container = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : window;
-
-        if (container === window) {
-            container.scrollTo = el.offsetTop;
-        } else {
-            el.scrollIntoView(true);
-        }
+    toElementTop: function toElementTop(el) {
+        window.scrollTo = el.offsetTop;
     },
-    toBottom: function toBottom() {
+    toPageTop: function toPageTop() {
+        window.scrollTo(0, 0);
+    },
+    toPageBottom: function toPageBottom() {
         var el = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
 
-        if (el === null) {
-            window.scrollTo(0, document.body.scrollHeight);
-        } else {
-            el.scrollTop = el.scrollHeight - el.clientHeight;
-        }
+        window.scrollTo(0, document.body.scrollHeight);
     },
-    toTop: function toTop() {
-        var el = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
 
-        if (el === null) {
-            window.scrollTo(0, 0);
-        } else {
-            el.scrollTop = 0;
-        }
-    },
+
+    // tested
     toward: function toward(upCb, downCb) {
-        var el = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : window;
-
-        var yOffsetProp = el === window ? 'scrollY' : 'scrollTop';
-        el[yOffsetProp] > this.currentPostion ? downCb() : upCb();
-        this.currentPostion = el[yOffsetProp];
+        var currentPostion = 0;
+        this.scroll(function () {
+            window.scrollY > currentPostion ? downCb() : upCb();
+            currentPostion = window.scrollY;
+        });
     }
 };
+
+// export default {
+//     // test
+//     // on(cb, el = window) {
+//     //     el.addEventListener('scroll', e => cb());
+//     // },
+
+//     //
+//     // reachedElementTop(cb, el) {
+//     //     this.on(
+//     //         () => {
+//     //             if (window.scrollY + window.innerHeight >= el.offsetTop) {
+//     //                 cb();
+//     //             }
+//     //         }, el);
+//     // },
+
+//     // test
+//     // reachedHalfOf(cb, el) {
+//     //     this.on(
+//     //         () => {
+//     //             let halfSize = window.scrollY + window.innerHeight - el.clientHeight / 2;
+//     //             let elBottom = el.offsetTop + el.clientHeight;
+//     //             if (halfSize >= el.offsetTop) {
+//     //                 cb();
+//     //             }
+//     //         });
+//     // },
+
+//     // reachedElementBottom(cb, el) {
+//     //     this.on(
+//     //         () => {
+//     //             if (window.scrollY + window.innerHeight >= el.offsetTop + el.scrollHeight) {
+//     //                 cb();
+//     //             }
+//     //         });
+//     // },
+
+//     // scroll container
+//     reachedContainerBottom(cb, container) {
+//         this.on(
+//             () => {
+//                 if (container.scrollTop + container.clientHeight >= container.scrollHeight) {
+//                     cb();
+//                 }
+//             }, container);
+//     },
+
+
+//     reachedToTop(cb, el = window) {
+//         this.on(() => {
+//             let yOffsetProp = el === window ? 'scrollY' : 'scrollTop';
+//             if (el[yOffsetProp] === 0) {
+//                 cb();
+//             }
+//         }, el);
+//     },
+
+//     to(el, container = window) {
+//         if (container === window) {
+//             container.scrollTo = el.offsetTop;
+//         } else {
+//             el.scrollIntoView(true);
+//         }
+//     },
+
+//     toBottom(el = null) {
+//         if (el === null) {
+//             window.scrollTo(0, document.body.scrollHeight);
+//         } else {
+//             el.scrollTop = el.scrollHeight - el.clientHeight;
+//         }
+//     },
+
+//     toTop(el = null) {
+//         if (el === null) {
+//             window.scrollTo(0, 0);
+//         } else {
+//             el.scrollTop = 0;
+//         }
+//     },
+
+//     toward(upCb, downCb, el = window) {
+//         let currentPostion = 0;
+//         this.on(() => {
+//             let yOffsetProp = el === window ? 'scrollY' : 'scrollTop';
+//             el[yOffsetProp] > currentPostion ? downCb() : upCb();
+//             currentPostion = el[yOffsetProp];
+//         }, el);
+//     }
+// }
+
+
+// el.offsetHeight including padding
+// el.clientHeight not including paddding
+// The HTMLElement.offsetTop read-only property returns the distance of the current element relative to the top of the offsetParent node.
+//The Element.scrollHeight read-only property is a measurement of the height of an element's content, including content not visible on the screen due to overflow.
+// if ussing window.onscroll will override each other, using addEventListener
 
 /***/ })
 /******/ ]);
