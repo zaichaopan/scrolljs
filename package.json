@@ -4,7 +4,8 @@
   "description": "Allow you to detect && control scroll behavior easily",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "webpack",
+    "watch": "npm run build -- watch"
   },
   "keywords": [
     "scroll",
