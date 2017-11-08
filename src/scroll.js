@@ -49,8 +49,8 @@ export default {
         }
     },
 
-    onWindow(cb) {
-        window.onscroll = (e) => cb();
+    on(cb, el= window){
+        el.onscroll = (e) => cb();
     },
 
     scrollToHalf(el, enterCb, leaveCb) {

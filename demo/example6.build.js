@@ -77,7 +77,6 @@ var _index2 = _interopRequireDefault(_index);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var imgs = document.querySelectorAll("img");
-console.log(imgs.length);
 
 var reachToImagHandler = function reachToImagHandler() {
     imgs.forEach(function (img) {
@@ -89,7 +88,7 @@ var reachToImagHandler = function reachToImagHandler() {
     });
 };
 
-_index2.default.onWindow(reachToImagHandler);
+_index2.default.on(reachToImagHandler);
 
 /***/ }),
 /* 1 */
@@ -178,16 +177,17 @@ exports.default = {
             return cb();
         };
     },
+    on: function on(cb) {
+        var el = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : window;
+
+        el.onscroll = function (e) {
+            return cb();
+        };
+    },
     scrollToHalf: function scrollToHalf(el, enterCb, leaveCb) {
         var halfSize = window.scrollY + window.innerHeight - el.height / 2;
         var elBottom = el.offsetTop + el.height;
         el.offsetTop <= halfSize && halfSize <= elBottom ? enterCb() : leaveCb();
-
-        // window.onscroll = (e) => {
-        //     let halfSize = window.scrollY + window.innerHeight - el.height / 2;
-        //     let elBottom = el.offsetTop + el.height;
-        //     el.offsetTop <= halfSize && halfSize <= elBottom ? enterCb() : leaveCb();
-        // }
     },
     scrollToward: function scrollToward(upCb, downCb) {
         var el = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : window;

@@ -11,5 +11,5 @@ let reachToImagHandler = () => {
         ));
 };
 
-scroll.onWindow(reachToImagHandler);
+scroll.on(reachToImagHandler);
 
