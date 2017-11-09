@@ -73,13 +73,37 @@
 var _index = __webpack_require__(1);
 
 var nav = document.querySelector('nav');
+var header = document.querySelector('.header');
 var skillContainer = document.querySelector('.skills');
+var planContainer = document.querySelector('.plans');
+var newsletterContainer = document.querySelector('.news-letter');
+var aboutLaracastContainer = document.querySelector('.about-laracast');
+
+header.querySelectorAll('button').forEach(function (btn) {
+    return btn.classList.add('complete');
+});
 
 _index.scrollWindow.reachedElementHalf(function () {
     return skillContainer.querySelectorAll('img').forEach(function (img) {
         return img.classList.add('complete');
     });
 }, skillContainer);
+
+_index.scrollWindow.reachedElementTop(function () {
+    planContainer.querySelectorAll('img').forEach(function (img) {
+        return img.classList.add('complete');
+    });
+}, planContainer);
+
+_index.scrollWindow.reachedElementTop(function () {
+    aboutLaracastContainer.querySelectorAll('.fade').forEach(function (item) {
+        return item.classList.add('complete');
+    });
+}, aboutLaracastContainer);
+
+_index.scrollWindow.reachedElementHalf(function () {
+    document.querySelector('.news-letter-action').classList.add('complete');
+}, newsletterContainer);
 
 _index.scrollWindow.toward(function () {
     if (!nav.classList.contains('fixed')) {

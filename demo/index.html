@@ -13,7 +13,7 @@
 
         nav {
             display: flex;
-            top:0px;
+            top: 0px;
             transition: all 0.5s;
         }
 
@@ -54,15 +54,23 @@
             justify-content: space-evenly;
         }
 
-        .fade-in {
-            opacity: 0;
-            transition: all 0.5s;
+        .plans {
+            margin-top: 50px;
+            margin-bottom: 50px;
+            display: flex;
+            justify-content: space-evenly;
         }
 
-        .fade-in-slow {
+        .fade {
             opacity: 0;
-            transition: all 0.8s;
+            /* transition: all 0.5s; */
         }
+
+        .zoom-in {
+            opacity: 0;
+            transform: scale(0.4);
+        }
+
 
         .fade-in-left {
             transform: translateX(-50%) scale(0.95);
@@ -80,14 +88,35 @@
             transform: translateY(100%) scale(0.95);
         }
 
-        .fade-in.complete {
+        .animate-speed-5 {
+            transition: all 0.5s;
+        }
+
+        .animate-speed-8 {
+            transition: all 0.8s;
+        }
+
+        .animate-speed-9 {
+            transition: all 0.9s;
+        }
+
+        .animate-speed-10 {
+            transition: all 1s;
+        }
+
+        .complete {
             opacity: 1;
             transform: translateX(0%) translateY(0%) scale(1);
         }
 
-        .fade-in-slow.complete {
-            opacity: 1;
-            transform: translateX(0%) translateY(0%) scale(1);
+        h1 {
+            font-size: 48px;
+            font-weight: lighter;
+        }
+
+        h2 {
+            font-size: 2.6rem;
+            font-weight: 500;
         }
     </style>
 </head>
@@ -103,33 +132,88 @@
             <li>Linkedin</li>
         </ul>
     </nav>
+    <div style="text-align:center; padding:20px" class="header">
+        
+        <h1>It's Kinda Like
+            <strong>Netflix</strong> for Your Career!</h1>
+        <div>
+            <p style="font-size:18px;font-weight:400;line-height: 1.4;
+    color: #919499;padding:0 21em">Learn practical, modern web development, through expert screencasts. Most video tutorials are boring. These aren't.
+                Ready to binge?</p>
+        </div>
+        <div>
+            <button style="background-color: #ef6733;
+    border-color: transparent;
+    color: #fff;padding:15px;font-size:14px;margin:10px" class="zoom-in animate-speed-10">BROWSER NOW</button>
+            <button style="    background-color: transparent;
+    border-color: #00b1b3;
+    color: #00b1b3; padding:15px;font-size:14px; margin:10px" class="zoom-in animate-speed-10">DISCUSSIONS</button>
+        </div>
+    </div>
     <div class="hero-banner">
         <img src="http://via.placeholder.com/1500x700" />
     </div>
-    <section class="container">
-        <div class="skills">
-            <img class="fade-in fade-in-left" src="http://via.placeholder.com/200x150" alt="">
-            <img class="fade-in-slow fade-in-down" src="http://via.placeholder.com/200x150" alt="">
-            <img class="fade-in-slow fade-in-down" src="http://via.placeholder.com/200x150" alt="">
-            <img class="fade-in-slow fade-in-down" src="http://via.placeholder.com/200x150" alt="">
-            <img class="fade-in fade-in-right" src="http://via.placeholder.com/200x150" alt="">
+    <section>
+        <div class="skills container">
+            <img class="fade animate-speed-5 fade-in-left" src="http://via.placeholder.com/200x150" alt="">
+            <img class="fade animate-speed-10 fade-in-down" src="http://via.placeholder.com/200x150" alt="">
+            <img class="fade animate-speed-10 fade-in-down" src="http://via.placeholder.com/200x150" alt="">
+            <img class="fade animate-speed-10 fade-in-down" src="http://via.placeholder.com/200x150" alt="">
+            <img class="fade animate-speed-5 fade-in-right" src="http://via.placeholder.com/200x150" alt="">
         </div>
 
-        <div>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Deleniti necessitatibus facere eveniet tempora culpa
-                sunt quos error adipisci maxime dolore. Modi, assumenda quis natus autem sint error ducimus repellendus tenetur
-                blanditiis eos incidunt, eveniet accusantium. Vel nam blanditiis quis aperiam eaque quasi omnis ab minima
-                corrupti qui ea possimus commodi reprehenderit nobis pariatur iure, nostrum debitis a! Repellat recusandae
-                sint sapiente molestiae, consectetur quae minima sunt ut, dolorem saepe totam aut? Atque quia deserunt consectetur
-                eaque. Fugit, consequatur reprehenderit inventore ad sunt sequi praesentium saepe mollitia minus consequuntur
-                eos perferendis voluptate dolore aspernatur labore ullam similique excepturi harum architecto expedita qui
-                molestias dignissimos nihil. Non alias repellendus, consequatur adipisci unde numquam itaque eum aperiam?
-                Error sunt sapiente officiis voluptate esse accusantium ipsam, tempore dolores magni, non quos. Labore consequuntur
-                velit dolor commodi, esse fugiat quisquam nisi et aut nobis cupiditate sequi sit iste, saepe quis suscipit
-                fugit accusamus repellendus nostrum fuga eos perspiciatis. Laudantium praesentium tempora quasi adipisci
-                minus maxime impedit reprehenderit cumque, ex aperiam et facilis cum aliquam quia. Quia molestiae itaque
-                aliquid eaque, ex sequi alias, aspernatur incidunt illum inventore hic omnis ut saepe nobis ipsa adipisci
-                aliquam quis magni praesentium vitae earum quae necessitatibus, obcaecati at! Rerum!</p>
+        <div class="container about-laracast" style="display:flex; align-items:center; margin-top:100px">
+            <div style="flex:1;padding:20px 70px" class="fade animate-speed-9 fade-in-up">
+                <h2>The most concise screencasts for the working developer, updated daily.</h2>
+            </div>
+            <div style="flex:1;color: #919499;
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 1.4em;
+    padding: 20px 70px;
+" class="fade animate-speed-9 fade-in-down">
+                <p>The secret sauce for Laracasts is a simple one. No slides. No scripts. Just Sublime. As a visual learner,
+                    I'd often find myself watching video tutorials and falling asleep. There's only so many diagrams and
+                    bullet lists that one person can get through!
+                </p>
+                <p>
+                    When launching Laracasts in 2013, I made a point to, at all times, keep the focus on, not academic theory, but real-life
+                    code and workflow.
+                </p>
+            </div>
+        </div>
+
+        <div style="text-align:center">
+            <img src="https://laracasts.com/svg-loaders/hearts.svg">
+            <h3 style="font-size: 2.6rem;font-weight: 500;">Choose a plan that fits your needs</h3>
+        </div>
+        <div class="plans container">
+            <img class="fade animate-speed-5 fade-in-up" src="http://via.placeholder.com/250x350" alt="">
+            <img class="fade animate-speed-9 fade-in-up" src="http://via.placeholder.com/250x350" alt="" style="margin-top:-20px">
+            <img class="fade animate-speed-10 fade-in-up" src="http://via.placeholder.com/250x350" alt="">
+            <img class="fade animate-speed-10 fade-in-up" src="http://via.placeholder.com/250x350" alt="">
+        </div>
+
+        <div class="container-fluent">
+            <img src="https://laracasts.com/images/home/meet-jeffrey-bg.jpg" alt="" style="width:100%">
+        </div>
+
+        <div class="conatiner news-letter" style="display:flex; align-items:center">
+            <div style="flex:1;padding:20px 70px">
+                <h2>Want us to email you occasionally with Laracasts news? </h2>
+            </div>
+            <div style="flex:1">
+                <div style="display:flex" class="news-letter-action fade animate-speed-5 fade-in-right">
+                    <input type="text" style="padding:15px; width:60%;font-size:18px" placeholder="Enter your email">
+                    <button style="padding: 16px;
+                        border-left: 0;
+                        border-top-left-radius: 0;
+                        border-bottom-left-radius: 0;
+                        font-size: 18px;background: #00b1b3;
+    color: #fff;">Subscribe</button>
+                </div>
+
+            </div>
         </div>
     </section>
 
