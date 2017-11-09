@@ -105,27 +105,27 @@ header.querySelectorAll('button').forEach(function (btn) {
     return btn.classList.add('animated');
 });
 
-_index.scrollWindow.reachedElementHalf(function () {
+_index.scrollWindow.reachedElementHalf(skillContainer, function () {
     return skillContainer.querySelectorAll('img').forEach(function (img) {
         return img.classList.add('animated');
     });
-}, skillContainer);
+});
 
-_index.scrollWindow.reachedElementTop(function () {
+_index.scrollWindow.reachedElementTop(planContainer, function () {
     planContainer.querySelectorAll('img').forEach(function (img) {
         return img.classList.add('animated');
     });
-}, planContainer);
+});
 
-_index.scrollWindow.reachedElementTop(function () {
+_index.scrollWindow.reachedElementTop(aboutLaracastContainer, function () {
     aboutLaracastContainer.querySelectorAll('.fade').forEach(function (item) {
         return item.classList.add('animated');
     });
-}, aboutLaracastContainer);
+});
 
-_index.scrollWindow.reachedElementHalf(function () {
+_index.scrollWindow.reachedElementHalf(newsletterContainer, function () {
     document.querySelector('.news-letter-action').classList.add('lightSpeedIn');
-}, newsletterContainer);
+});
 
 _index.scrollWindow.toward(function () {
     if (!nav.classList.contains('fixed')) {
@@ -213,17 +213,38 @@ var _toward = function _toward(container, upCb, downCb) {
 };
 
 var scrollWindow = exports.scrollWindow = {
+    /**
+     * Execute a callback function when scrolling the window.
+     * 
+     * @param {function} cb 
+     */
     scroll: function scroll(cb) {
         _scroll(window, cb);
     },
-    reachedElementTop: function reachedElementTop(cb, el) {
+
+
+    /**
+     * Execute a callback function when scrolling the window reaches the top of an element.
+     * 
+     * @param {Htm dom} el 
+     * @param {function} cb 
+     */
+    reachedElementTop: function reachedElementTop(el, cb) {
         _scroll(window, function () {
             if (window.scrollY + window.innerHeight >= el.offsetTop) {
                 cb();
             }
         });
     },
-    reachedElementHalf: function reachedElementHalf(cb, el) {
+
+
+    /**
+     *  Execute a callback function when scrolling the window to the half of an element.
+     * 
+     * @param {Html dom} el 
+     * @param {function} cb 
+     */
+    reachedElementHalf: function reachedElementHalf(el, cb) {
         _scroll(window, function () {
             var halfSize = window.scrollY + window.innerHeight - el.clientHeight / 2;
             var elBottom = el.offsetTop + el.clientHeight;
@@ -232,13 +253,29 @@ var scrollWindow = exports.scrollWindow = {
             }
         });
     },
-    reachedElementBottom: function reachedElementBottom(cb, el) {
+
+
+    /**
+     * Execute a callback function when scrolling the window to the bottom of an element.
+     * 
+     * @param {Html dom} el 
+     * @param {function} cb 
+     */
+    reachedElementBottom: function reachedElementBottom(el, cb) {
         _scroll(window, function () {
             if (window.scrollY + window.innerHeight >= el.offsetTop + el.scrollHeight) {
                 cb();
             }
         });
     },
+
+
+    /**
+     * Execute a callback function when scrolling the window to the page bottom.
+     * 
+     * @param {function} cb 
+     * @param {Html dom} footer 
+     */
     reachedPageBottom: function reachedPageBottom(cb) {
         var footer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
 
@@ -250,33 +287,77 @@ var scrollWindow = exports.scrollWindow = {
             }
         });
     },
-    reachedPageTop: function reachedPageTop(cb) {
-        var el = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : window;
 
+
+    /**
+     * Execute a callback function when scrolling the window to the top of the page.
+     * 
+     * @param {function} cb 
+     */
+    reachedPageTop: function reachedPageTop(cb) {
         _scroll(window, function () {
             if (window.scrollY === 0) {
                 cb();
             }
         });
     },
+
+
+    /**
+     *  Scrolling the window to the top of an element.
+     * 
+     * @param {Html dom} el 
+     */
     toElementTop: function toElementTop(el) {
         window.scrollTo(0, el.offsetTop);
     },
+
+
+    /**
+     *  Scrolling the window to the top of the page.
+     */
     toPageTop: function toPageTop() {
         window.scrollTo(0, 0);
     },
+
+
+    /**
+     *  Scrolling the window to the bottom of the page.
+     */
     toPageBottom: function toPageBottom() {
         window.scrollTo(0, document.body.scrollHeight);
     },
+
+
+    /**
+     * Execute a callback function when the window scrolls up and another when the window scrolls down.
+     * 
+     * @param {function} upCb 
+     * @param {function} downCb 
+     */
     toward: function toward(upCb, downCb) {
         _toward(window, upCb, downCb);
     }
 };
 
 var scrollContainer = exports.scrollContainer = {
+    /**
+     * Execute a callback function when scrolling a scrollable container.
+     * 
+     * @param {Html dom} container 
+     * @param {function} cb 
+     */
     scroll: function scroll(container, cb) {
         _scroll(container, cb);
     },
+
+
+    /**
+     * Execute a callback function when scrolling to the bottom of a scrollable container.
+     * 
+     * @param {Html dom} container 
+     * @param {function} cb 
+     */
     reachedContainerBottom: function reachedContainerBottom(container, cb) {
         _scroll(container, function () {
             if (container.scrollTop + container.clientHeight >= container.scrollHeight) {
@@ -284,6 +365,14 @@ var scrollContainer = exports.scrollContainer = {
             }
         });
     },
+
+
+    /**
+     * Execute a callback function when scrolling to the top of a scrollable container.
+     * 
+     * @param {Html dom} container 
+     * @param {function} cb 
+     */
     reachedContainerTop: function reachedContainerTop(container, cb) {
         _scroll(container, function () {
             if (container.scrollTop === 0) {
@@ -291,15 +380,45 @@ var scrollContainer = exports.scrollContainer = {
             }
         });
     },
+
+
+    /**
+     * Scroll to the top of an element in a scrollable container.
+     * 
+     * @param {Html dom} el 
+     */
     toElementTop: function toElementTop(el) {
         el.scrollIntoView(true);
     },
+
+
+    /**
+     * Scroll to the top of a scrollable container.
+     * 
+     * @param {Html dom} container 
+     */
     toContainerTop: function toContainerTop(container) {
         container.scrollTop = 0;
     },
+
+
+    /**
+     * Scroll to a scrollable container bottom.
+     * 
+     * @param {Html dom} container 
+     */
     toContainerBottom: function toContainerBottom(container) {
         container.scrollTop = container.scrollHeight - container.clientHeight;
     },
+
+
+    /**
+     * Execute a callback function when the scrollable container scrolls up and another when the window scrolls down.
+     * 
+     * @param {Html Dom} container 
+     * @param {function} upCb 
+     * @param {function} downCb 
+     */
     toward: function toward(container, upCb, downCb) {
         _toward(container, upCb, downCb);
     }

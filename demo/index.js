@@ -19,37 +19,40 @@ goToBottom.addEventListener('click', () => {
     scrollWindow.toPageBottom();
 });
 
-goToTop.addEventListener('click', ()=> {
+goToTop.addEventListener('click', () => {
     scrollWindow.toPageTop();
 });
 
 goToPlan.addEventListener('click', () => {
     scrollWindow.toElementTop(document.querySelector('.plan-title'));
-}); 
+});
 
 scrollWindow.reachedPageBottom(() => console.log('You have reach page bottom'), document.querySelector('footer'));
 scrollWindow.reachedPageTop(() => console.log('You have reach page top'));
 
-header.querySelectorAll('button').forEach( btn =>  btn.classList.add('animated'))
+header.querySelectorAll('button').forEach(btn => btn.classList.add('animated'))
 
 scrollWindow.reachedElementHalf(
-    () => skillContainer.querySelectorAll('img').forEach(img => img.classList.add('animated')), 
-    skillContainer);
+    skillContainer,
+    () => skillContainer.querySelectorAll('img').forEach(img => img.classList.add('animated')));
 
 scrollWindow.reachedElementTop(
+    planContainer,
     () => {
         planContainer.querySelectorAll('img').forEach(img => img.classList.add('animated'))
-    }, planContainer);
+    });
 
 scrollWindow.reachedElementTop(
+    aboutLaracastContainer,
     () => {
         aboutLaracastContainer.querySelectorAll('.fade').forEach(item => item.classList.add('animated'));
-    }, aboutLaracastContainer);
+    });
 
 scrollWindow.reachedElementHalf(
+    newsletterContainer,
     () => {
         document.querySelector('.news-letter-action').classList.add('lightSpeedIn');
-    }, newsletterContainer);
+    });
 
 scrollWindow.toward(
     () => {
@@ -78,6 +81,5 @@ scrollContainer.reachedContainerBottom(targetContainer, () => console.log('reach
 scrollContainer.reachedContainerTop(targetContainer, () => console.log('reach to container top'));
 scrollContainer.toward(targetContainer, () => console.log('scroll up in container'), () => console.log('scroll down in container'));
 goToTargetImg.addEventListener('click', e => scrollContainer.toElementTop(targetImage));
- goContainBottom.addEventListener('click', e => scrollContainer.toContainerBottom(targetContainer));
- goContainTop.addEventListener('click', e => scrollContainer.toContainerTop(targetContainer));
-
+goContainBottom.addEventListener('click', e => scrollContainer.toContainerBottom(targetContainer));
+goContainTop.addEventListener('click', e => scrollContainer.toContainerTop(targetContainer));
