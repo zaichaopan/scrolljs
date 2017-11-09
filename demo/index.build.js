@@ -78,31 +78,53 @@ var skillContainer = document.querySelector('.skills');
 var planContainer = document.querySelector('.plans');
 var newsletterContainer = document.querySelector('.news-letter');
 var aboutLaracastContainer = document.querySelector('.about-laracast');
+var goToBottom = document.querySelector('#goToBottom');
+var goToTop = document.querySelector('#goToTop');
+var goToPlan = document.querySelector('#goToplan');
+
+goToBottom.addEventListener('click', function () {
+    _index.scrollWindow.toPageBottom();
+});
+
+goToTop.addEventListener('click', function () {
+    _index.scrollWindow.toPageTop();
+});
+
+goToPlan.addEventListener('click', function () {
+    _index.scrollWindow.toElementTop(document.querySelector('.plan-title'));
+});
+
+_index.scrollWindow.reachedPageBottom(function () {
+    return console.log('You have reach page bottom');
+}, document.querySelector('footer'));
+_index.scrollWindow.reachedPageTop(function () {
+    return console.log('You have reach page top');
+});
 
 header.querySelectorAll('button').forEach(function (btn) {
-    return btn.classList.add('complete');
+    return btn.classList.add('animated');
 });
 
 _index.scrollWindow.reachedElementHalf(function () {
     return skillContainer.querySelectorAll('img').forEach(function (img) {
-        return img.classList.add('complete');
+        return img.classList.add('animated');
     });
 }, skillContainer);
 
 _index.scrollWindow.reachedElementTop(function () {
     planContainer.querySelectorAll('img').forEach(function (img) {
-        return img.classList.add('complete');
+        return img.classList.add('animated');
     });
 }, planContainer);
 
 _index.scrollWindow.reachedElementTop(function () {
     aboutLaracastContainer.querySelectorAll('.fade').forEach(function (item) {
-        return item.classList.add('complete');
+        return item.classList.add('animated');
     });
 }, aboutLaracastContainer);
 
 _index.scrollWindow.reachedElementHalf(function () {
-    document.querySelector('.news-letter-action').classList.add('complete');
+    document.querySelector('.news-letter-action').classList.add('animated');
 }, newsletterContainer);
 
 _index.scrollWindow.toward(function () {
@@ -148,15 +170,11 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 var scrollWindow = exports.scrollWindow = {
-    // tested
     scroll: function scroll(cb) {
         window.addEventListener('scroll', function (e) {
             return cb();
         });
     },
-
-
-    // tested
     reachedElementTop: function reachedElementTop(cb, el) {
         this.scroll(function () {
             if (window.scrollY + window.innerHeight >= el.offsetTop) {
@@ -164,9 +182,6 @@ var scrollWindow = exports.scrollWindow = {
             }
         });
     },
-
-
-    // tested
     reachedElementHalf: function reachedElementHalf(cb, el) {
         this.scroll(function () {
             var halfSize = window.scrollY + window.innerHeight - el.clientHeight / 2;
@@ -176,9 +191,6 @@ var scrollWindow = exports.scrollWindow = {
             }
         });
     },
-
-
-    //tested
     reachedElementBottom: function reachedElementBottom(cb, el) {
         this.scroll(function () {
             if (window.scrollY + window.innerHeight >= el.offsetTop + el.scrollHeight) {
@@ -201,25 +213,20 @@ var scrollWindow = exports.scrollWindow = {
         var el = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : window;
 
         this.scroll(function () {
-            if (window.screenY === 0) {
+            if (window.scrollY === 0) {
                 cb();
             }
         });
     },
     toElementTop: function toElementTop(el) {
-        window.scrollTo = el.offsetTop;
+        window.scrollTo(0, el.offsetTop);
     },
     toPageTop: function toPageTop() {
         window.scrollTo(0, 0);
     },
     toPageBottom: function toPageBottom() {
-        var el = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
-
         window.scrollTo(0, document.body.scrollHeight);
     },
-
-
-    // tested
     toward: function toward(upCb, downCb) {
         var currentPostion = 0;
         this.scroll(function () {

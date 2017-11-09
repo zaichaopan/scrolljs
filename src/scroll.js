@@ -1,10 +1,8 @@
 export const scrollWindow = {
-    // tested
     scroll(cb) {
         window.addEventListener('scroll', e => cb());
     },
 
-    // tested
     reachedElementTop(cb, el) {
         this.scroll(
             () => {
@@ -14,7 +12,7 @@ export const scrollWindow = {
             });
     },
 
-    // tested
+
     reachedElementHalf(cb, el) {
         this.scroll(
             () => {
@@ -26,7 +24,6 @@ export const scrollWindow = {
             });
     },
 
-    //tested
     reachedElementBottom(cb, el) {
         this.scroll(
             () => {
@@ -48,25 +45,24 @@ export const scrollWindow = {
 
     reachedPageTop(cb, el = window) {
         this.scroll(() => {
-            if (window.screenY === 0) {
+            if (window.scrollY === 0) {
                 cb();
             }
         });
     },
 
     toElementTop(el) {
-        window.scrollTo = el.offsetTop;
+        window.scrollTo(0, el.offsetTop);
     },
 
     toPageTop() {
         window.scrollTo(0, 0);
     },
 
-    toPageBottom(el = null) {
+    toPageBottom() {
         window.scrollTo(0, document.body.scrollHeight);
     },
 
-    // tested
     toward(upCb, downCb) {
         let currentPostion = 0;
         this.scroll(() => {

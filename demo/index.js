@@ -10,27 +10,45 @@ let skillContainer = document.querySelector('.skills');
 let planContainer = document.querySelector('.plans');
 let newsletterContainer = document.querySelector('.news-letter');
 let aboutLaracastContainer = document.querySelector('.about-laracast');
+let goToBottom = document.querySelector('#goToBottom');
+let goToTop = document.querySelector('#goToTop');
+let goToPlan = document.querySelector('#goToplan');
 
-header.querySelectorAll('button').forEach( btn =>  btn.classList.add('complete'))
+goToBottom.addEventListener('click', () => {
+    scrollWindow.toPageBottom();
+});
+
+goToTop.addEventListener('click', ()=> {
+    scrollWindow.toPageTop();
+});
+
+goToPlan.addEventListener('click', () => {
+    scrollWindow.toElementTop(document.querySelector('.plan-title'));
+}); 
+
+scrollWindow.reachedPageBottom(() => console.log('You have reach page bottom'), document.querySelector('footer'));
+scrollWindow.reachedPageTop(() => console.log('You have reach page top'));
+
+header.querySelectorAll('button').forEach( btn =>  btn.classList.add('animated'))
 
 scrollWindow.reachedElementHalf(
-    () => skillContainer.querySelectorAll('img').forEach(img => img.classList.add('complete')), skillContainer);
+    () => skillContainer.querySelectorAll('img').forEach(img => img.classList.add('animated')), 
+    skillContainer);
 
 scrollWindow.reachedElementTop(
     () => {
-        planContainer.querySelectorAll('img').forEach(img => img.classList.add('complete'))
+        planContainer.querySelectorAll('img').forEach(img => img.classList.add('animated'))
     }, planContainer);
 
 scrollWindow.reachedElementTop(
     () => {
-        aboutLaracastContainer.querySelectorAll('.fade').forEach(item => item.classList.add('complete'));
+        aboutLaracastContainer.querySelectorAll('.fade').forEach(item => item.classList.add('animated'));
     }, aboutLaracastContainer);
 
 scrollWindow.reachedElementHalf(
     () => {
-        document.querySelector('.news-letter-action').classList.add('complete');
-    }, newsletterContainer
-);
+        document.querySelector('.news-letter-action').classList.add('animated');
+    }, newsletterContainer);
 
 scrollWindow.toward(
     () => {
