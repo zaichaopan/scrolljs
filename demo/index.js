@@ -47,7 +47,7 @@ scrollWindow.reachedElementTop(
 
 scrollWindow.reachedElementHalf(
     () => {
-        document.querySelector('.news-letter-action').classList.add('animated');
+        document.querySelector('.news-letter-action').classList.add('lightSpeedIn');
     }, newsletterContainer);
 
 scrollWindow.toward(

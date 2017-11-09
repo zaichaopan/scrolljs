@@ -9,6 +9,7 @@
         body {
             overflow-x: hidden;
             margin: 0px;
+                font-family: sans-serif;
         }
 
         nav {
@@ -108,6 +109,24 @@
             transform: translateX(0%) translateY(0%) scale(1);
         }
 
+        .lightSpeedIn {
+           opacity: 1;
+           animation: lightSpeedIn ease 0.5s
+        }
+
+        @keyframes lightSpeedIn{
+            0% {
+                transform: translateX(50%) skew(0deg)
+            }
+            90% {
+                transform: translateX(0%) skew(25deg);
+            }
+
+            100% {
+                transform:translateX(0%) skew(0deg);
+            }
+        }
+
         h1 {
             font-size: 48px;
             font-weight: lighter;
@@ -117,6 +136,26 @@
             font-size: 2.6rem;
             font-weight: 500;
         }
+
+        input:focus {
+            outline: none;
+        }
+
+        @media screen and (max-width: 767px) {
+            nav {
+                display: block;
+            }
+
+            nav ul {
+                display:block;
+            }
+        }
+
+        .columns:not(:last-child) {
+            margin-bottom: 20px;
+        }
+
+        /* scss inside a container &.is */
     </style>
 </head>
 
@@ -185,6 +224,9 @@
         <div style="text-align:center" class="plan-title">
             <img src="https://laracasts.com/svg-loaders/hearts.svg">
             <h3 style="font-size: 2.6rem;font-weight: 500;">Choose a plan that fits your needs</h3>
+            <p style="width:35%;font-size:18px;margin:auto;color: #919499">Joining takes less than a minute, and, if your peers are correct, is a pretty dang good decision. If you're still on the
+                fence, we have a plan called “monthly” - and it’s not like the gym. Seriously - you can cancel in five seconds, if this
+                isn't for you.</p>
         </div>
         <div class="plans container">
             <img class="fade animate-speed-5 fade-in-up" src="http://via.placeholder.com/250x350" alt="">
@@ -202,8 +244,10 @@
                 <h2>Want us to email you occasionally with Laracasts news? </h2>
             </div>
             <div style="flex:1">
-                <div style="display:flex" class="news-letter-action fade animate-speed-5 fade-in-right">
-                    <input type="text" style="padding:15px; width:60%;font-size:18px" placeholder="Enter your email">
+                <div style="display:flex" class="news-letter-action fade">
+                    <input type="text" style="padding:15px; width:60%;font-size:18px;border-top-left-radius: 5px;
+    border: 1px solid #ddd;
+    border-bottom-left-radius: 5px;" placeholder="Enter your email">
                     <button style="padding: 16px;
                         border-left: 0;
                         border-top-left-radius: 0;
@@ -219,7 +263,7 @@
 
     <footer>
         <div style="height:250px"> 
-            this is footer
+            <!-- this is footer -->
         </div>
     </footer>
     <script src="index.build.js"></script>

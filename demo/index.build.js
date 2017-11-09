@@ -124,7 +124,7 @@ _index.scrollWindow.reachedElementTop(function () {
 }, aboutLaracastContainer);
 
 _index.scrollWindow.reachedElementHalf(function () {
-    document.querySelector('.news-letter-action').classList.add('animated');
+    document.querySelector('.news-letter-action').classList.add('lightSpeedIn');
 }, newsletterContainer);
 
 _index.scrollWindow.toward(function () {
@@ -169,21 +169,33 @@ var scrollWindow = exports.scrollWindow = scroll.scrollWindow;
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
+var _scroll = function _scroll(el, cb) {
+    return el.addEventListener('scroll', function (e) {
+        return cb();
+    });
+};
+var _toward = function _toward(container, upCb, downCb) {
+    var currentPostion = 0;
+    var yOffsetProp = container === window ? 'scrollY' : 'scrollTop';
+    _scroll(container, function () {
+        container[yOffsetProp] > currentPostion ? downCb() : upCb();
+        currentPostion = container[yOffsetProp];
+    });
+};
+
 var scrollWindow = exports.scrollWindow = {
     scroll: function scroll(cb) {
-        window.addEventListener('scroll', function (e) {
-            return cb();
-        });
+        _scroll(window, cb);
     },
     reachedElementTop: function reachedElementTop(cb, el) {
-        this.scroll(function () {
+        _scroll(window, function () {
             if (window.scrollY + window.innerHeight >= el.offsetTop) {
                 cb();
             }
         });
     },
     reachedElementHalf: function reachedElementHalf(cb, el) {
-        this.scroll(function () {
+        _scroll(window, function () {
             var halfSize = window.scrollY + window.innerHeight - el.clientHeight / 2;
             var elBottom = el.offsetTop + el.clientHeight;
             if (halfSize >= el.offsetTop) {
@@ -192,7 +204,7 @@ var scrollWindow = exports.scrollWindow = {
         });
     },
     reachedElementBottom: function reachedElementBottom(cb, el) {
-        this.scroll(function () {
+        _scroll(window, function () {
             if (window.scrollY + window.innerHeight >= el.offsetTop + el.scrollHeight) {
                 cb();
             }
@@ -201,7 +213,7 @@ var scrollWindow = exports.scrollWindow = {
     reachedPageBottom: function reachedPageBottom(cb) {
         var footer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
 
-        this.scroll(function () {
+        _scroll(window, function () {
             var footerHeight = footer === null ? 0 : footer.clientHeight;
             var hasReachedBottom = window.innerHeight + window.scrollY >= document.body.scrollHeight - footerHeight;
             if (hasReachedBottom) {
@@ -212,7 +224,7 @@ var scrollWindow = exports.scrollWindow = {
     reachedPageTop: function reachedPageTop(cb) {
         var el = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : window;
 
-        this.scroll(function () {
+        _scroll(window, function () {
             if (window.scrollY === 0) {
                 cb();
             }
@@ -228,109 +240,49 @@ var scrollWindow = exports.scrollWindow = {
         window.scrollTo(0, document.body.scrollHeight);
     },
     toward: function toward(upCb, downCb) {
-        var currentPostion = 0;
-        this.scroll(function () {
-            window.scrollY > currentPostion ? downCb() : upCb();
-            currentPostion = window.scrollY;
-        });
+        _toward(window, upCb, downCb);
     }
 };
 
-// export default {
-//     // test
-//     // on(cb, el = window) {
-//     //     el.addEventListener('scroll', e => cb());
-//     // },
+var scrollContainer = exports.scrollContainer = {
+    scroll: function scroll(container, cb) {
+        _scroll(container, cb);
+    },
+    reachedContainerBottom: function reachedContainerBottom(container) {
+        _scroll(container, function () {
+            if (container.scrollTop + container.clientHeight >= container.scrollHeight) {
+                cb();
+            }
+        });
+    },
+    reachedContainerTop: function reachedContainerTop() {
+        _scroll(container, function () {
+            if (container.scrollTop === 0) {
+                cb();
+            }
+        });
+    },
+    toElementTop: function toElementTop(el) {
+        el.scrollIntoView(true);
+    },
+    toContainerTop: function toContainerTop(container) {
+        container.scrollTop = 0;
+    },
+    toContainerBottom: function toContainerBottom() {
+        container.scrollTop = container.scrollHeight - container.clientHeight;
+    },
+    toward: function toward(container, upCb, downCb) {
+        _toward(container, upCb, downCb);
+    }
+};
 
-//     //
-//     // reachedElementTop(cb, el) {
-//     //     this.on(
-//     //         () => {
-//     //             if (window.scrollY + window.innerHeight >= el.offsetTop) {
-//     //                 cb();
-//     //             }
-//     //         }, el);
-//     // },
+/*
 
-//     // test
-//     // reachedHalfOf(cb, el) {
-//     //     this.on(
-//     //         () => {
-//     //             let halfSize = window.scrollY + window.innerHeight - el.clientHeight / 2;
-//     //             let elBottom = el.offsetTop + el.clientHeight;
-//     //             if (halfSize >= el.offsetTop) {
-//     //                 cb();
-//     //             }
-//     //         });
-//     // },
-
-//     // reachedElementBottom(cb, el) {
-//     //     this.on(
-//     //         () => {
-//     //             if (window.scrollY + window.innerHeight >= el.offsetTop + el.scrollHeight) {
-//     //                 cb();
-//     //             }
-//     //         });
-//     // },
-
-//     // scroll container
-//     reachedContainerBottom(cb, container) {
-//         this.on(
-//             () => {
-//                 if (container.scrollTop + container.clientHeight >= container.scrollHeight) {
-//                     cb();
-//                 }
-//             }, container);
-//     },
-
-
-//     reachedToTop(cb, el = window) {
-//         this.on(() => {
-//             let yOffsetProp = el === window ? 'scrollY' : 'scrollTop';
-//             if (el[yOffsetProp] === 0) {
-//                 cb();
-//             }
-//         }, el);
-//     },
-
-//     to(el, container = window) {
-//         if (container === window) {
-//             container.scrollTo = el.offsetTop;
-//         } else {
-//             el.scrollIntoView(true);
-//         }
-//     },
-
-//     toBottom(el = null) {
-//         if (el === null) {
-//             window.scrollTo(0, document.body.scrollHeight);
-//         } else {
-//             el.scrollTop = el.scrollHeight - el.clientHeight;
-//         }
-//     },
-
-//     toTop(el = null) {
-//         if (el === null) {
-//             window.scrollTo(0, 0);
-//         } else {
-//             el.scrollTop = 0;
-//         }
-//     },
-
-//     toward(upCb, downCb, el = window) {
-//         let currentPostion = 0;
-//         this.on(() => {
-//             let yOffsetProp = el === window ? 'scrollY' : 'scrollTop';
-//             el[yOffsetProp] > currentPostion ? downCb() : upCb();
-//             currentPostion = el[yOffsetProp];
-//         }, el);
-//     }
-// }
-
+*/
 
 // el.offsetHeight including padding
 // el.clientHeight not including paddding
-// The HTMLElement.offsetTop read-only property returns the distance of the current element relative to the top of the offsetParent node.
+// el.offsetTop read-only property returns the distance of the current element relative to the top of the offsetParent node.
 //The Element.scrollHeight read-only property is a measurement of the height of an element's content, including content not visible on the screen due to overflow.
 // if ussing window.onscroll will override each other, using addEventListener
 
