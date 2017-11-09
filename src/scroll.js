@@ -72,14 +72,14 @@ export const scrollWindow = {
     toward(upCb, downCb) {
         toward(window, upCb, downCb);
     }
-}
+};
 
 export const scrollContainer = {
     scroll(container, cb) {
         scroll(container, cb);
     },
 
-    reachedContainerBottom(container) {
+    reachedContainerBottom(container, cb) {
         scroll(container, () => {
             if (container.scrollTop + container.clientHeight >= container.scrollHeight) {
                 cb();
@@ -87,7 +87,7 @@ export const scrollContainer = {
         });
     },
 
-    reachedContainerTop() {
+    reachedContainerTop(container, cb) {
         scroll(container, () => {
             if (container.scrollTop === 0) {
                 cb();
@@ -103,21 +103,11 @@ export const scrollContainer = {
         container.scrollTop = 0;
     },
 
-    toContainerBottom() {
+    toContainerBottom(container) {
         container.scrollTop = container.scrollHeight - container.clientHeight;
     },
 
     toward(container, upCb, downCb) {
         toward(container, upCb, downCb);
     }
-}
-
-/*
-
-*/
-
-// el.offsetHeight including padding
-// el.clientHeight not including paddding
-// el.offsetTop read-only property returns the distance of the current element relative to the top of the offsetParent node.
-//The Element.scrollHeight read-only property is a measurement of the height of an element's content, including content not visible on the screen due to overflow.
-// if ussing window.onscroll will override each other, using addEventListener
+};

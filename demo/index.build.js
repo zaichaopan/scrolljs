@@ -139,6 +139,34 @@ _index.scrollWindow.toward(function () {
     }
 });
 
+// scroll container
+var targetContainer = document.querySelector('.scroll-container');
+var targetImage = targetContainer.querySelector('img');
+var goToTargetImg = document.querySelector('#goToImg');
+var goContainBottom = document.querySelector('#goToCB');
+var goContainTop = document.querySelector('#goToCT');
+
+_index.scrollContainer.reachedContainerBottom(targetContainer, function () {
+    return console.log('reach to container bottom');
+});
+_index.scrollContainer.reachedContainerTop(targetContainer, function () {
+    return console.log('reach to container top');
+});
+_index.scrollContainer.toward(targetContainer, function () {
+    return console.log('scroll up in container');
+}, function () {
+    return console.log('scroll down in container');
+});
+goToTargetImg.addEventListener('click', function (e) {
+    return _index.scrollContainer.toElementTop(targetImage);
+});
+goContainBottom.addEventListener('click', function (e) {
+    return _index.scrollContainer.toContainerBottom(targetContainer);
+});
+goContainTop.addEventListener('click', function (e) {
+    return _index.scrollContainer.toContainerTop(targetContainer);
+});
+
 /***/ }),
 /* 1 */
 /***/ (function(module, exports, __webpack_require__) {
@@ -149,7 +177,7 @@ _index.scrollWindow.toward(function () {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.scrollWindow = undefined;
+exports.scrollContainer = exports.scrollWindow = undefined;
 
 var _scroll = __webpack_require__(2);
 
@@ -158,6 +186,7 @@ var scroll = _interopRequireWildcard(_scroll);
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 var scrollWindow = exports.scrollWindow = scroll.scrollWindow;
+var scrollContainer = exports.scrollContainer = scroll.scrollContainer;
 
 /***/ }),
 /* 2 */
@@ -248,14 +277,14 @@ var scrollContainer = exports.scrollContainer = {
     scroll: function scroll(container, cb) {
         _scroll(container, cb);
     },
-    reachedContainerBottom: function reachedContainerBottom(container) {
+    reachedContainerBottom: function reachedContainerBottom(container, cb) {
         _scroll(container, function () {
             if (container.scrollTop + container.clientHeight >= container.scrollHeight) {
                 cb();
             }
         });
     },
-    reachedContainerTop: function reachedContainerTop() {
+    reachedContainerTop: function reachedContainerTop(container, cb) {
         _scroll(container, function () {
             if (container.scrollTop === 0) {
                 cb();
@@ -268,23 +297,13 @@ var scrollContainer = exports.scrollContainer = {
     toContainerTop: function toContainerTop(container) {
         container.scrollTop = 0;
     },
-    toContainerBottom: function toContainerBottom() {
+    toContainerBottom: function toContainerBottom(container) {
         container.scrollTop = container.scrollHeight - container.clientHeight;
     },
     toward: function toward(container, upCb, downCb) {
         _toward(container, upCb, downCb);
     }
 };
-
-/*
-
-*/
-
-// el.offsetHeight including padding
-// el.clientHeight not including paddding
-// el.offsetTop read-only property returns the distance of the current element relative to the top of the offsetParent node.
-//The Element.scrollHeight read-only property is a measurement of the height of an element's content, including content not visible on the screen due to overflow.
-// if ussing window.onscroll will override each other, using addEventListener
 
 /***/ })
 /******/ ]);

@@ -1,5 +1,6 @@
 import {
-    scrollWindow
+    scrollWindow,
+    scrollContainer
 }
 from '../index';
 
@@ -64,3 +65,19 @@ scrollWindow.toward(
         }
     }
 );
+
+
+// scroll container
+let targetContainer = document.querySelector('.scroll-container');
+let targetImage = targetContainer.querySelector('img');
+let goToTargetImg = document.querySelector('#goToImg');
+let goContainBottom = document.querySelector('#goToCB');
+let goContainTop = document.querySelector('#goToCT');
+
+scrollContainer.reachedContainerBottom(targetContainer, () => console.log('reach to container bottom'));
+scrollContainer.reachedContainerTop(targetContainer, () => console.log('reach to container top'));
+scrollContainer.toward(targetContainer, () => console.log('scroll up in container'), () => console.log('scroll down in container'));
+goToTargetImg.addEventListener('click', e => scrollContainer.toElementTop(targetImage));
+ goContainBottom.addEventListener('click', e => scrollContainer.toContainerBottom(targetContainer));
+ goContainTop.addEventListener('click', e => scrollContainer.toContainerTop(targetContainer));
+
