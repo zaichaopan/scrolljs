@@ -1,5 +1,5 @@
 {
-  "name": "scroll.js",
+  "name": "@zaichaopan/scroll.js",
   "version": "1.0.0",
   "description": "Allow you to detect && control scroll behavior easily",
   "main": "index.js",
