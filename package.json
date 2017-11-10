@@ -1,5 +1,5 @@
 {
-  "name": "@zaichaopan/scroll.js",
+  "name": "zai-easy-scroll",
   "version": "1.0.0",
   "description": "Allow you to detect && control scroll behavior easily",
   "main": "index.js",
@@ -19,5 +19,14 @@
     "babel-loader": "^7.1.2",
     "babel-preset-env": "^1.6.1",
     "webpack": "^3.8.1"
-  }
+  },
+  "dependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zaichaopan/scrolljs.git"
+  },
+  "bugs": {
+    "url": "https://github.com/zaichaopan/scrolljs/issues"
+  },
+  "homepage": "https://github.com/zaichaopan/scrolljs#readme"
 }

@@ -1,8 +1,23 @@
-# An easy way to controll and detect scroll behavor of the the window or a scrollable container
+# An easy way to controll and detect scroll behavor
 
-If you feel confused about __scrollY, scrollTop, clientHeight, scrollHeight, innerHeight, offsetTop, scrollTo__ when trying to manipulate scroll behavior of the window of a scrollable container, this package will be the thing you are looking for. It provides readonable api to make working with scrollbar much easier.
+You may feel confused about scrollY, scrollTop, clientHeight, scrollHeight, innerHeight, offsetTop, scrollTo when trying to manipulate scroll behavior of the window of a scrollable container, like detecting whether it is scrolling, it is scrolling up or down, or whether it has reached a certain element. This package provides an easy way to handle these tasks.
+
+## Install
+
+You can install the package via npm:
+
+```shell
+npm install zai-easy-scroll 
+```
 
 ## Working with scrollbar of the window
+
+### import scrollWindow
+
+```javascript
+//In your js file
+import { scrollWindow } from 'zai-easy-scroll';
+```
 
 ### scrollWindow.scroll(cb)
 
@@ -25,7 +40,7 @@ scrollWindow.toward(upCb, downCb);
 
 ### scrollWindow.reachedElementTop(el, cb)
 
-Execute a callback function when scrolling the window reaches the top of an element.
+Execute a callback function when the window scrolls to the top of an element.
 
 ```javascript
 // target element with class target
@@ -36,7 +51,7 @@ scrollWindow.reachedElementTop(el, cb);
 
 ### scrollWindow.reachedElementHalf(el, cb)
 
-Execute a callback function when scrolling the window to the half of an element.
+Execute a callback function when the window scrolls to the half of an element.
 
 ```javascript
 // target element with class target
@@ -47,7 +62,7 @@ scrollWindow.reachedElementHalf(el, cb);
 
 ### scrollWindow.reachedElementBottom(el, cb)
 
-Execute a callback function when scrolling the window to the bottom of an element.
+Execute a callback function when the window scrolls to the bottom of an element.
 
 ```javascript
 // target element with class target
@@ -58,7 +73,7 @@ scrollWindow.reachedElementBottom(el, cb);
 
 ### scrollWindow.reachedPageBottom((cb, footer = null))
 
-Execute a callback function when scrolling the window to the page bottom.
+Execute a callback function when the window scrolls to the page bottom.
 
 ```javascript
 // target element with class target
@@ -71,7 +86,7 @@ scrollWindow.reachedPageBottom(cb, footer);
 
 ### scrollWindow.reachedPageTop(cb)
 
-Execute a callback function when scrolling the window to the top of the page.
+Execute a callback function when the window scrolls to the top of the page.
 
 ```javascript
 let cb = () => console.log('You have reached the top of the page');
@@ -80,7 +95,7 @@ scrollWindow.reachedPageTop(cb);
 
 ### scrollWindow.toElementTop(el)
 
-Scroll to an element of the page
+Scrolls to an element of the page
 
 ```javascript
 // target element with class target
@@ -90,7 +105,7 @@ scrollWindow.toElementTop(el);
 
 ### scrollWindow.toPageTop()
 
-Scrolling the window to the top of the page.
+Scrolls to the top of the page.
 
 ```javascript
 scrollWindow.toPageTop();
@@ -98,13 +113,20 @@ scrollWindow.toPageTop();
 
 ### scrollWindow.toPageBottom()
 
-Scrolling the window to the bottom of the page.
+Scrolls to the bottom of the page.
 
 ```javascript
 scrollWindow.toPageBottom();
 ```
 
-## working with scrollbar of a container
+## Working with scrollbar of a container
+
+### import scrollContainer
+
+```javascript
+//In your js file
+import { scrollContainer } from 'zai-easy-scroll';
+```
 
 ### scrollContainer.scroll(cb)
 
@@ -123,7 +145,7 @@ Execute function: __upCb__ when the scrollbar in a scrollable container is scrol
 
 ```javascript
 // container with class: scroll-container
-let container = document.querySelector('.scroll-container')
+let container = document.querySelector('.scroll-container');
 let upCb = () => console.log('the scrollbar is scrolling up');
 let downCb = () => console.log('the scrollbar is scrolling down');
 scrollContainer.toward(container, upCb, downCb);
@@ -135,7 +157,7 @@ Execute a callback function when scrolling to the bottom of a scrollable contain
 
 ```javascript
 // container with class: scroll-container
-let container = document.querySelector('.scroll-container')
+let container = document.querySelector('.scroll-container');
 let cb = () => console.log('You has reacehd the bottom of the container!');
 scrollContainer.reachedContainerBottom(container, cb);
 ```
